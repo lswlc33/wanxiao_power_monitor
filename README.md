@@ -63,4 +63,4 @@ python server/serverRun.py
 Material Design User Interface [https://www.mdui.org/](https://www.mdui.org/)  
 Apache ECharts [https://echarts.apache.org/](https://echarts.apache.org/)  
 Flask [https://flask.palletsprojects.com/](https://flask.palletsprojects.com/)  
-waitress [https://docs.pylonsproject.org/projects/waitress/en/latest/](https://docs.pylonsproject.org/projects/waitress/en/latest/)  
+waitress [https://docs.pylonsproject.org/projects/waitress/en/latest/](https://docs.pylonsproject.org/projects/waitress/en/latest/)
