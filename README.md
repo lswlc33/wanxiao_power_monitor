@@ -38,6 +38,10 @@ pip install waitress
 > 请保证你在项目根目录!
 > cd wanxiao_power_monitor
 
+确保请求配置符合你的学校情况  
+修改 `server/tools/wanxiao_api.py` 中  
+`getRoomState` 函数的 `data` 字段
+
 ```bash
 python server/spiderRun.py
 ```
