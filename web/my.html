@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/mdui.global.js"></script>
+    <link rel="stylesheet" href="css/mdui.css">
+    <link rel="stylesheet" href="css/myCss.css">
+    <script src="js/myjs.js"></script>
+    <title>我的</title>
+</head>
+
+<body>
+    <mdui-top-app-bar>
+        <mdui-top-app-bar-title style="padding-left: 20px;">我的</mdui-top-app-bar-title>
+        <div style="flex-grow: 1"></div>
+        <mdui-button-icon icon="refresh" onclick="location.reload()"></mdui-button-icon>
+    </mdui-top-app-bar>
+
+
+    <mdui-layout-item class="main_layout">
+        <mdui-text-field label="请输入房间号" variant="outlined"></mdui-text-field>
+        <h1>我的房间订阅</h1>
+        <mdui-checkbox>电量低于100提醒</mdui-checkbox>
+        <mdui-checkbox>电量低于50提醒</mdui-checkbox>
+        <mdui-checkbox>电量低于10提醒</mdui-checkbox>
+        <h1>提醒方式</h1>
+        <mdui-checkbox>Email</mdui-checkbox>
+        <mdui-checkbox>微信公众号</mdui-checkbox>
+        <mdui-checkbox>自建API</mdui-checkbox>
+
+        <div style="background-color: rgba(255, 0, 0,0.2); padding: 10px; border-radius:5px;">该功能还未开放</div>
+
+        <mdui-button id="alert_setting_save">保存</mdui-button>
+    </mdui-layout-item>
+
+
+    <mdui-navigation-bar value="item-3">
+        <mdui-navigation-bar-item icon="timeline" value="item-1" href="index.html">总览</mdui-navigation-bar-item>
+        <mdui-navigation-bar-item icon="search" value="item-2" href="search.html">查询</mdui-navigation-bar-item>
+        <mdui-navigation-bar-item icon="face" value="item-3" href="my.html">我的</mdui-navigation-bar-item>
+    </mdui-navigation-bar>
+
+    <mdui-navigation-rail value="item-3">
+        <div style="height: 20px;"></div>
+        <mdui-navigation-rail-item icon="timeline" value="item-1" href="index.html">总览</mdui-navigation-rail-item>
+        <mdui-navigation-rail-item icon="search" value="item-2" href="search.html">查询</mdui-navigation-rail-item>
+        <mdui-navigation-rail-item icon="face" value="item-3" href="my.html">我的</mdui-navigation-rail-item>
+    </mdui-navigation-rail>
+
+
+    <mdui-dialog close-on-overlay-click headline="h" description="d" class="example-action">
+        <mdui-button slot="action" variant="tonal" onclick="document.querySelector('mdui-dialog').open = false">好吧 ...</mdui-button>
+    </mdui-dialog>
+
+    <script>
+
+    </script>
+</body>
+
+</html>
