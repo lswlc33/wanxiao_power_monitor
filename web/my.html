@@ -18,8 +18,34 @@
         <mdui-button-icon icon="refresh" onclick="location.reload()"></mdui-button-icon>
     </mdui-top-app-bar>
 
+    <mdui-layout-item class="user_layout vip">
+        <h1>欢迎，示例用户</h1>
+        <mdui-button id="logout">退出登录</mdui-button>
+    </mdui-layout-item>
+
+    <mdui-layout-item class="user_layout visitor">
+        <h1>当前未登录</h1>
+        <mdui-button id="login">注册</mdui-button><mdui-button id="login">登录</mdui-button>
+
+    </mdui-layout-item>
+
+    <mdui-layout-item class="signin_layout">
+        <h1>注册账号</h1>
+        <mdui-text-field label="请输入账号" variant="outlined"></mdui-text-field>
+        <mdui-text-field label="请输入密码" variant="outlined" type="password"></mdui-text-field>
+        <mdui-text-field label="请再次输入密码" variant="outlined" type="password"></mdui-text-field>
+        <mdui-button id="signin">注册</mdui-button>
+    </mdui-layout-item>
+
+    <mdui-layout-item class="login_layout">
+        <h1>登录</h1>
+        <mdui-text-field label="账号" variant="outlined"></mdui-text-field>
+        <mdui-text-field label="密码" variant="outlined" type="password"></mdui-text-field>
+        <mdui-button id="login">登录</mdui-button>
+    </mdui-layout-item>
 
     <mdui-layout-item class="main_layout">
+        <h1>订阅设置</h1>
         <mdui-text-field label="请输入房间号" variant="outlined"></mdui-text-field>
         <h1>我的房间订阅</h1>
         <mdui-checkbox>电量低于100提醒</mdui-checkbox>
@@ -51,7 +77,8 @@
 
 
     <mdui-dialog close-on-overlay-click headline="h" description="d" class="example-action">
-        <mdui-button slot="action" variant="tonal" onclick="document.querySelector('mdui-dialog').open = false">好吧 ...</mdui-button>
+        <mdui-button slot="action" variant="tonal" onclick="document.querySelector('mdui-dialog').open = false">好吧
+            ...</mdui-button>
     </mdui-dialog>
 
     <script>
