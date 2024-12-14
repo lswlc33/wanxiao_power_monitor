@@ -18,15 +18,16 @@ window.onload = function () {
             } else {
                 if (page == "item-1") {
                     initIndexPage()
-                } else if (page == "item-2") {
-                    initSearchPage()
-                } else {
-                    initMyPage()
                 }
             }
         }).catch(e => {
             dialogOpen(document.querySelector("mdui-dialog"), "出错啦！", "后端连接失败，请检查")
         });
+    if (page == "item-2") {
+        initSearchPage()
+    } else {
+        initMyPage()
+    }
 }
 
 let initIndexPage = () => {
@@ -98,6 +99,7 @@ let initMyPage = () => {
     document.querySelector("#alert_setting_save").addEventListener("click", () => {
         dialogOpen(document.querySelector("mdui-dialog"), "抱歉！", "该功能还没写出来 TAT")
     });
+    checkLogin();
 }
 
 let setChart = (dom, x, y, type) => {
@@ -248,6 +250,7 @@ let login = () => {
 
 let logout = () => {
     cookieOperation.removeCookie('username');
+    dialogOpen(document.querySelector("mdui-dialog"), '好', '已退出登录')
     checkLogin();
 }
 
@@ -269,12 +272,33 @@ let register = () => {
 
 // 检查是否登录.切换页面形态
 let checkLogin = () => {
+    document.querySelector('.register_layout').style.display = "none";
+    document.querySelector('.login_layout').style.display = "none";
     let username = cookieOperation.getCookie('username');
-    if (username == null) {
+    if (username = null) {
         login_user = null;
+        document.querySelector('.user_layout.vip').style.display = "none";
+        document.querySelector('.user_layout.visitor').style.display = "flex";
+        document.querySelector('#setting').style.display = "none";
     } else {
         login_user = username;
+        document.querySelector('#user_welcome').innerHTML = `欢迎回来，${username}`;
+        document.querySelector('.user_layout.vip').style.display = "flex";
+        document.querySelector('.user_layout.visitor').style.display = "none";
+        document.querySelector('#setting').style.display = "flex";
     }
+}
+// 按钮切换页面
+let ctRegister = () => {
+    document.querySelector('.user_layout.visitor').style.display = "none";
+    document.querySelector('.register_layout').style.display = "flex";
+    document.querySelector('.login_layout').style.display = "none";
+}
+
+let ctLogin = () => {
+    document.querySelector('.user_layout.visitor').style.display = "none";
+    document.querySelector('.register_layout').style.display = "none";
+    document.querySelector('.login_layout').style.display = "flex";
 }
 
 let cookieOperation = {
@@ -293,7 +317,7 @@ let cookieOperation = {
     removeCookie: (name) => {
         var exp = new Date();
         exp.setTime(exp.getTime() - 1);
-        var cval = getCookie(name);
+        var cval = cookieOperation.getCookie(name);
         if (cval != null)
             document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
     },

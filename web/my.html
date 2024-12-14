@@ -24,12 +24,13 @@
 
     <mdui-layout-item class="user_layout vip">
         <h1 id="user_welcome">欢迎，示例用户</h1>
-        <mdui-button id="logout">退出登录</mdui-button>
+        <mdui-button id="logout" onclick="logout()">退出登录</mdui-button>
     </mdui-layout-item>
 
     <mdui-layout-item class="user_layout visitor">
         <h1>当前未登录</h1>
-        <mdui-button id="register" onclick="register()">注册</mdui-button><mdui-button id="login">登录</mdui-button>
+        <mdui-button id="register" onclick="ctRegister()">注册</mdui-button>
+        <mdui-button id="login" onclick="ctLogin()">登录</mdui-button>
     </mdui-layout-item>
 
     <mdui-layout-item class="register_layout">
@@ -37,14 +38,14 @@
         <mdui-text-field label="请输入账号" variant="outlined"></mdui-text-field>
         <mdui-text-field label="请输入密码" variant="outlined" type="password"></mdui-text-field>
         <mdui-text-field label="请再次输入密码" variant="outlined" type="password"></mdui-text-field>
-        <mdui-button id="register">注册</mdui-button>
+        <mdui-button id="register" onclick="register()">注册</mdui-button>
     </mdui-layout-item>
 
     <mdui-layout-item class="login_layout">
         <h1>登录</h1>
         <mdui-text-field label="账号" variant="outlined"></mdui-text-field>
         <mdui-text-field label="密码" variant="outlined" type="password"></mdui-text-field>
-        <mdui-button id="login">登录</mdui-button>
+        <mdui-button id="login" onclick="login()">登录</mdui-button>
     </mdui-layout-item>
 
     <mdui-layout-item class="main_layout" id="setting">
