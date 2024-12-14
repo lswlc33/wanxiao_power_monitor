@@ -203,3 +203,47 @@ let dialogOpen = (dom, headline, description) => {
     dom.description = description;
     dom.open = true;
 }
+
+// 登录页面相关
+let login = () => {
+    cookieOperation.setCookie('username', username, 1);
+}
+
+let logout = () => {
+    cookieOperation.removeCookie('username');
+}
+
+let register = () => {
+    fetch(API_URL + `api/register?username={}&password={}`)
+    cookieOperation.setCookie('username', username, 1);
+}
+
+let checkLogin = () => {
+    if (cookieOperation.getCookie('username') == null) {
+        
+    } else {
+
+    }
+}
+
+let cookieOperation = {
+    setCookie: (name, value, days) => {
+        var exp = new Date();
+        exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+    },
+    getCookie: (name) => {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+    },
+    removeCookie: (name) => {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval = getCookie(name);
+        if (cval != null)
+            document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+    },
+}

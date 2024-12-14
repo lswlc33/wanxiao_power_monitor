@@ -24,7 +24,7 @@
 }
 
 .login_layout,
-.signin_layout,
+.register_layout,
 .user_layout {
     display: flex;
     flex-direction: column;
