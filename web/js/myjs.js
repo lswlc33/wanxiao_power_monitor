@@ -3,6 +3,9 @@ var API_URL = `/`;
 // API_URL = 'http://localhost:5000/';
 // API_URL = 'http://zzw1.wch1.top:22100/';
 
+// 当前登录 用户
+var login_user = null;
+
 // 判断页面进行初始化
 window.onload = function () {
     let page = document.querySelector("mdui-navigation-bar").value
@@ -11,16 +14,19 @@ window.onload = function () {
         .then(data => {
             if (data['msg'] != "ok") {
                 dialogOpen(document.querySelector("mdui-dialog"), "出错啦！", "后端连接失败，请检查")
+                return
+            } else {
+                if (page == "item-1") {
+                    initIndexPage()
+                } else if (page == "item-2") {
+                    initSearchPage()
+                } else {
+                    initMyPage()
+                }
             }
-        })
-
-    if (page == "item-1") {
-        initIndexPage()
-    } else if (page == "item-2") {
-        initSearchPage()
-    } else {
-        initMyPage()
-    }
+        }).catch(e => {
+            dialogOpen(document.querySelector("mdui-dialog"), "出错啦！", "后端连接失败，请检查")
+        });
 }
 
 let initIndexPage = () => {
@@ -31,8 +37,9 @@ let initIndexPage = () => {
             let roomid = data['data'].map(item => (item[0]));
             let power = data['data'].map(item => (parseFloat(item[1])));
             setChart(dangerRoom, roomid, power, 1);
+        }).catch(e => {
+            dialogOpen(document.querySelector("mdui-dialog"), '错误', `未知错误 ${e}`)
         });
-
     //  添加计时器缓解后端压力
     setTimeout(() => {
         fetch(API_URL + 'api/getDiedRoom')
@@ -42,6 +49,8 @@ let initIndexPage = () => {
                 let roomid = data['data'].map(item => (item[0]));
                 let power = data['data'].map(item => (parseFloat(item[1])));
                 setChart(diedRoom, roomid, power, 1);
+            }).catch(e => {
+                dialogOpen(document.querySelector("mdui-dialog"), '错误', `未知错误 ${e}`)
             });
     }, 500);
     setTimeout(() => {
@@ -52,7 +61,9 @@ let initIndexPage = () => {
                 let roomid = data['data'].map(item => (item[0]));
                 let power = data['data'].map(item => (parseFloat(item[1])));
                 setChart(richRoom, roomid, power, 1);
-            })
+            }).catch(e => {
+                dialogOpen(document.querySelector("mdui-dialog"), '错误', `未知错误 ${e}`)
+            });
     }, 1000);
     setTimeout(() => {
         fetch(API_URL + 'api/getRoomStateRank?type=0')
@@ -62,7 +73,9 @@ let initIndexPage = () => {
                 let roomid = data['data'].map(item => (item[0]));
                 let power = data['data'].map(item => (parseFloat(item[1])));
                 setChart(wasteRoom, roomid, power, 1);
-            })
+            }).catch(e => {
+                dialogOpen(document.querySelector("mdui-dialog"), '错误', `未知错误 ${e}`)
+            });
     }, 1500);
     setTimeout(() => {
         fetch(API_URL + 'api/getRoomStateRank?type=1')
@@ -73,6 +86,9 @@ let initIndexPage = () => {
                 let power = data['data'].map(item => (parseFloat(item[1])));
                 setChart(saveRoom, roomid, power, 1);
             })
+            .catch(e => {
+                dialogOpen(document.querySelector("mdui-dialog"), '错误', `未知错误 ${e}`)
+            });
     }, 2000);
 }
 
@@ -176,6 +192,9 @@ let getPower = () => {
         .then(res => res.json()).then(res => {
             document.getElementById("current_power").innerHTML = res['msg'];
         })
+        .catch(e => {
+            dialogOpen(document.querySelector("mdui-dialog"), '错误', `未知错误 ${e}`)
+        });
     setTimeout(() => {
         fetch(API_URL + `api/getRoomStateRecent?roomId=${room_id}&num=24`)
             .then(data => data.json()).then(data => {
@@ -183,6 +202,9 @@ let getPower = () => {
                 let power = data['data'].map(item => (parseFloat(item[1])));
                 setChart(document.getElementById('recentdaypower'), power, times, 2);
             })
+            .catch(e => {
+                dialogOpen(document.querySelector("mdui-dialog"), '错误', `未知错误 ${e}`)
+            });
 
     }, 500);
     setTimeout(() => {
@@ -191,7 +213,9 @@ let getPower = () => {
                 let times = data['data'].map(item => (item[0]));
                 let power = data['data'].map(item => (parseFloat(item[1])));
                 setChart(document.getElementById('recentmopower'), power, times, 2);
-            })
+            }).catch(e => {
+                dialogOpen(document.querySelector("mdui-dialog"), '错误', `未知错误 ${e}`)
+            });
     }, 500);
 
 
@@ -206,23 +230,50 @@ let dialogOpen = (dom, headline, description) => {
 
 // 登录页面相关
 let login = () => {
-    cookieOperation.setCookie('username', username, 1);
+    fetch(API_URL)
+        .then(data => data.json()).then(data => {
+            result = data['msg'];
+            if (result) {
+                dialogOpen(document.querySelector("mdui-dialog"), '登录成功', '耶！');
+                cookieOperation.setCookie('username', username, 1);
+                checkLogin();
+            } else {
+                dialogOpen(document.querySelector("mdui-dialog"), '登录失败', '请检查用户名或密码');
+            }
+        }).catch(e => {
+            dialogOpen(document.querySelector("mdui-dialog"), '错误', `未知错误 ${e}`)
+        });
+
 }
 
 let logout = () => {
     cookieOperation.removeCookie('username');
+    checkLogin();
 }
 
 let register = () => {
-    fetch(API_URL + `api/register?username={}&password={}`)
-    cookieOperation.setCookie('username', username, 1);
+    fetch(API_URL)
+        .then(data => data.json()).then(data => {
+            result = data['msg'];
+            if (result) {
+                dialogOpen(document.querySelector("mdui-dialog"), '注册成功', '已经自动登录');
+                cookieOperation.setCookie('username', username, 1);
+                checkLogin();
+            } else {
+                dialogOpen(document.querySelector("mdui-dialog"), '注册失败', '请检查用户名或密码');
+            }
+        }).catch(e => {
+            dialogOpen(document.querySelector("mdui-dialog"), '错误', `未知错误 ${e}`)
+        });
 }
 
+// 检查是否登录.切换页面形态
 let checkLogin = () => {
-    if (cookieOperation.getCookie('username') == null) {
-        
+    let username = cookieOperation.getCookie('username');
+    if (username == null) {
+        login_user = null;
     } else {
-
+        login_user = username;
     }
 }
 
